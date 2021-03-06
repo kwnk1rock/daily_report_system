@@ -20,7 +20,7 @@
         <c:forEach var="report" items="${reports}" varStatus="status">
           <tr class="row${status.count % 2}">
             <td class="report_name"><c:out value="${reports.employee.name}" /></td>
-            <td class="report_date"><fmt:formatDate value='${reports,report_date}' pattern='yyyy-MM-dd' /></td>
+            <td class="report_date"><fmt:formatDate value='${reports.report_date}' pattern='yyyy-MM-dd' /></td>
             <td class="report_title">${report.title}</td>
             <td class="report_action"><a href="<c:url value='/reports/show?id=${report.id}' />">詳細を見る</a></td>
           </tr>
@@ -36,7 +36,7 @@
             <c:out value="${i}" />%nbsp;
           </c:when>
           <c:otherwise>
-            <a href="<c:url value='/reports/index?page=${i}' />"><c:out value="${i}" /></a>$nbsp;
+            <a href="<c:url value='/reports/index?page=${i}' />"><c:out value="${i}" /></a>%nbsp;
           </c:otherwise>
         </c:choose>
       </c:forEach>
