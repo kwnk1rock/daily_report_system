@@ -10,8 +10,8 @@
 
   </div>
 </c:if>
-<label for="reports_date">日付</label><br />
-<input type="date" name="reports_date" value="<fmt:formatDate value='${reports.report_date}' pattern='yyyy-MM-dd' />" />
+<label for="report_date">日付</label><br />
+<input type="date" name="report_date" value="<fmt:formatDate value='${reports.report_date}' pattern='yyyy-MM-dd' />" />
 <br /><br />
 
 <label for="name">氏名</label><br />
