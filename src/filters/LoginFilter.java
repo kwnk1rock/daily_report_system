@@ -43,7 +43,7 @@ public class LoginFilter implements Filter {
         String context_path = ((HttpServletRequest)request).getContextPath();
         String servlet_path = ((HttpServletRequest)request).getServletPath();
 
-        if(!servlet_path.matches("css/*")){
+        if(!servlet_path.matches("/css.*")){
             HttpSession session = ((HttpServletRequest)request).getSession();
 
             Employee e = (Employee)session.getAttribute("login_employee");
@@ -51,6 +51,11 @@ public class LoginFilter implements Filter {
             if(!servlet_path.equals("/login")){
                 if(e == null){
                     ((HttpServletResponse)response).sendRedirect(context_path + "/login");
+                    return;
+                }
+
+                if(servlet_path.matches("/employees.*") && e.getAdmin_flag() == 0){
+                    ((HttpServletResponse)response).sendRedirect(context_path + "/");
                     return;
                 }
             }else{
