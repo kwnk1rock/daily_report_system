@@ -14,6 +14,14 @@
 <input type="date" name="report_date" value="<fmt:formatDate value='${report.report_date}' pattern='yyyy-MM-dd' />" />
 <br /><br />
 
+<label for="started_at">出勤日時</label><br />
+<input type="datetime-local" name="started_at" value="<fmt:formatDate value='${timecard.started_at}' pattern='yyyy-MM-dd HH:mm:ss' />" />
+<br /><br />
+
+<label for="ended_at">退勤日時</label><br />
+<input type="datetime-local" name="ended_at" value="<fmt:formatDate value='${timecard.ended_at}' pattern='yyyy-MM-dd HH:mm:ss' />" />
+<br /><br />
+
 <label for="name">氏名</label><br />
 <c:out value="${sessionScope.login_employee.name}" />
 <br /><br />

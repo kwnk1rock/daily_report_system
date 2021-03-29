@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import models.Employee;
 import models.Report;
+import models.TimeCard;
 import models.validators.ReportValidator;
 import utils.DBUtil;
 
@@ -42,8 +43,13 @@ public class ReportsCreateServlet extends HttpServlet {
             EntityManager em = DBUtil.createEntityManager();
 
             Report r = new Report();
+            TimeCard t = new TimeCard();
 
             r.setEmployee((Employee)request.getSession().getAttribute("login_employee"));
+            t.setEmployee((Employee)request.getSession().getAttribute("login_employee"));
+
+            request.getSession().setAttribute("tc_report_id", r);
+            t.setReport((Report)request.getSession().getAttribute("tc_report_id"));
 
             Date report_date = new Date(System.currentTimeMillis());
             String rd_str = request.getParameter("report_date");
@@ -51,6 +57,9 @@ public class ReportsCreateServlet extends HttpServlet {
                 report_date = Date.valueOf(request.getParameter("report_date"));
             }
             r.setReport_date(report_date);
+
+            t.setStarted_at(Timestamp.valueOf(request.getParameter("started_at")));
+            t.setEnded_at(Timestamp.valueOf(request.getParameter("ended_at")));
 
             r.setTitle(request.getParameter("title"));
             r.setContent(request.getParameter("content"));
@@ -65,6 +74,7 @@ public class ReportsCreateServlet extends HttpServlet {
 
                 request.setAttribute("_token", request.getSession().getId());
                 request.setAttribute("report", r);
+                request.setAttribute("timecard", t);
                 request.setAttribute("errors", errors);
 
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/new.jsp");
@@ -72,6 +82,7 @@ public class ReportsCreateServlet extends HttpServlet {
             }else{
                 em.getTransaction().begin();
                 em.persist(r);
+                em.persist(t);
                 em.getTransaction().commit();
                 em.close();
                 request.getSession().setAttribute("flush", "登録が完了しました");

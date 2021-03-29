@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import models.Employee;
 import models.Report;
+import models.TimeCard;
 import utils.DBUtil;
 
 /**
@@ -50,6 +51,10 @@ public class TopPageIndexServlet extends HttpServlet {
                .setMaxResults(15)
                .getResultList();
 
+        List<TimeCard> timecards = em.createNamedQuery("getMyTimeCards", TimeCard.class)
+                .setParameter("employee", login_employee)
+                .getResultList();
+
         long reports_count = (long)em.createNamedQuery("getMyReportsCount", Long.class)
                 .setParameter("employee", login_employee)
                 .getSingleResult();
@@ -57,6 +62,7 @@ public class TopPageIndexServlet extends HttpServlet {
         em.close();
 
         request.setAttribute("reports", reports);
+        request.setAttribute("timecards", timecards);
         request.setAttribute("reports_count", reports_count);
         request.setAttribute("page", page);
 

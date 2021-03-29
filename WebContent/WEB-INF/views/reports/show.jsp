@@ -18,6 +18,14 @@
               <td><fmt:formatDate value="${report.report_date}" pattern="yyyy-MM-dd" /></td>
             </tr>
             <tr>
+              <th>出勤</th>
+              <td><fmt:formatDate value="${timecard.started_at}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+            </tr>
+            <tr>
+              <th>退勤</th>
+              <td><fmt:formatDate value="${timecard.ended_at}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+            </tr>
+            <tr>
               <th>内容</th>
               <td>
                 <pre><c:out value="${report.content}" /></pre>

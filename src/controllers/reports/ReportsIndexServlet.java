@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Report;
+import models.TimeCard;
 import utils.DBUtil;
 
 /**
@@ -46,12 +47,16 @@ public class ReportsIndexServlet extends HttpServlet {
                 .setMaxResults(15)
                 .getResultList();
 
+        List<TimeCard> timecards = em.createNamedQuery("getAllTimeCards", TimeCard.class)
+                .getResultList();
+
         long reports_count = (long)em.createNamedQuery("getReportsCount", Long.class)
                 .getSingleResult();
 
         em.close();
 
         request.setAttribute("reports", reports);
+        request.setAttribute("timecards", timecards);
         request.setAttribute("reports_count", reports_count);
         request.setAttribute("page", page);
         if(request.getSession().getAttribute("flush") != null){
